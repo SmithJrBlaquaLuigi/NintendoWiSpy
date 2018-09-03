@@ -55,7 +55,8 @@ char use_ssid[32] = "";
 char use_password[32] = "";
 
 //Controller packet headers MINUS the first bit
-const unsigned char GC_PREFIX_STRING[24] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+const unsigned char GC_PREFIX_STRING[27] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
+//const unsigned char GC_PREFIX_STRING[24] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1};
 const unsigned char N64_PREFIX_STRING[8] = {0, 0, 0, 0, 0, 0, 1, 1};
 
 // Declare some space to store the bits we read from a controller.
@@ -349,12 +350,12 @@ inline void loop_N64() {
         }
         memset(rawData, 0, sizeof(rawData)); //Clear frame incase we got bad frame
         trans_pending = false;
-        unsigned long startmillis = micros();
+       /* unsigned long startmillis = micros();
         while ((micros() - startmillis) < 100 ) {
             if (!PIN_READ(5)) {
                 startmillis = micros();
             }
-        }
+        }*/
         attachInterrupt(digitalPinToInterrupt(5), gc_n64_isr, FALLING);
         defined_bits = N64_PREFIX + N64_BITCOUNT;
     }
